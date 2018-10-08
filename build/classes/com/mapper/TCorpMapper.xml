@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.TCorpMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.TCorp" >
+    <id column="UUID" property="uuid" jdbcType="VARCHAR" />
+    <result column="ORG" property="org" jdbcType="INTEGER" />
+    <result column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SEQ_ID" property="seqId" jdbcType="INTEGER" />
+    <result column="REG_NO" property="regNo" jdbcType="VARCHAR" />
+    <result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+    <result column="ADDR" property="addr" jdbcType="VARCHAR" />
+    <result column="BELONG_ORG" property="belongOrg" jdbcType="VARCHAR" />
+    <result column="BELONG_DIST_ORG" property="belongDistOrg" jdbcType="VARCHAR" />
+    <result column="BELONG_TRADE" property="belongTrade" jdbcType="VARCHAR" />
+    <result column="ECON_KIND" property="econKind" jdbcType="VARCHAR" />
+    <result column="ADMIT_MAIN" property="admitMain" jdbcType="VARCHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="CHECK_DATE" property="checkDate" jdbcType="TIMESTAMP" />
+    <result column="OPER_MAN_IDENT_NO" property="operManIdentNo" jdbcType="VARCHAR" />
+    <result column="OPER_MAN_NAME" property="operManName" jdbcType="VARCHAR" />
+    <result column="CORP_STATUS" property="corpStatus" jdbcType="VARCHAR" />
+    <result column="REG_CAPI" property="regCapi" jdbcType="INTEGER" />
+    <result column="FARE_TERM_START" property="fareTermStart" jdbcType="TIMESTAMP" />
+    <result column="FARE_TERM_END" property="fareTermEnd" jdbcType="VARCHAR" />
+    <result column="FARE_SCOPE" property="fareScope" jdbcType="VARCHAR" />
+    <result column="UNI_SCID" property="uniScid" jdbcType="VARCHAR" />
+    <result column="TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="WEB_URL" property="webUrl" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="PRAC_PERSON_NUM" property="pracPersonNum" jdbcType="INTEGER" />
+    <result column="ORG_INST_CODE" property="orgInstCode" jdbcType="VARCHAR" />
+    <result column="TAXPAY_NUM" property="taxpayNum" jdbcType="VARCHAR" />
+    <result column="STAFF_SIZE" property="staffSize" jdbcType="VARCHAR" />
+    <result column="ENGLISH_NAME" property="englishName" jdbcType="VARCHAR" />
+    <result column="FORMER_NAME" property="formerName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ORG" property="createOrg" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UUID, ORG, ID, SEQ_ID, REG_NO, CORP_NAME, ADDR, BELONG_ORG, BELONG_DIST_ORG, BELONG_TRADE, 
+    ECON_KIND, ADMIT_MAIN, START_DATE, CHECK_DATE, OPER_MAN_IDENT_NO, OPER_MAN_NAME, 
+    CORP_STATUS, REG_CAPI, FARE_TERM_START, FARE_TERM_END, FARE_SCOPE, UNI_SCID, TEL, 
+    WEB_URL, EMAIL, PRAC_PERSON_NUM, ORG_INST_CODE, TAXPAY_NUM, STAFF_SIZE, ENGLISH_NAME, 
+    FORMER_NAME, CREATE_DATE, CREATE_ORG
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pojo.TCorpExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_corp
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_corp
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_corp
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pojo.TCorpExample" >
+    delete from t_corp
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pojo.TCorp" >
+    insert into t_corp (UUID, ORG, ID, 
+      SEQ_ID, REG_NO, CORP_NAME, 
+      ADDR, BELONG_ORG, BELONG_DIST_ORG, 
+      BELONG_TRADE, ECON_KIND, ADMIT_MAIN, 
+      START_DATE, CHECK_DATE, OPER_MAN_IDENT_NO, 
+      OPER_MAN_NAME, CORP_STATUS, REG_CAPI, 
+      FARE_TERM_START, FARE_TERM_END, FARE_SCOPE, 
+      UNI_SCID, TEL, WEB_URL, 
+      EMAIL, PRAC_PERSON_NUM, ORG_INST_CODE, 
+      TAXPAY_NUM, STAFF_SIZE, ENGLISH_NAME, 
+      FORMER_NAME, CREATE_DATE, CREATE_ORG
+      )
+    values (#{uuid,jdbcType=VARCHAR}, #{org,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, 
+      #{seqId,jdbcType=INTEGER}, #{regNo,jdbcType=VARCHAR}, #{corpName,jdbcType=VARCHAR}, 
+      #{addr,jdbcType=VARCHAR}, #{belongOrg,jdbcType=VARCHAR}, #{belongDistOrg,jdbcType=VARCHAR}, 
+      #{belongTrade,jdbcType=VARCHAR}, #{econKind,jdbcType=VARCHAR}, #{admitMain,jdbcType=VARCHAR}, 
+      #{startDate,jdbcType=TIMESTAMP}, #{checkDate,jdbcType=TIMESTAMP}, #{operManIdentNo,jdbcType=VARCHAR}, 
+      #{operManName,jdbcType=VARCHAR}, #{corpStatus,jdbcType=VARCHAR}, #{regCapi,jdbcType=INTEGER}, 
+      #{fareTermStart,jdbcType=TIMESTAMP}, #{fareTermEnd,jdbcType=VARCHAR}, #{fareScope,jdbcType=VARCHAR}, 
+      #{uniScid,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{webUrl,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{pracPersonNum,jdbcType=INTEGER}, #{orgInstCode,jdbcType=VARCHAR}, 
+      #{taxpayNum,jdbcType=VARCHAR}, #{staffSize,jdbcType=VARCHAR}, #{englishName,jdbcType=VARCHAR}, 
+      #{formerName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createOrg,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.TCorp" >
+    insert into t_corp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="org != null" >
+        ORG,
+      </if>
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="seqId != null" >
+        SEQ_ID,
+      </if>
+      <if test="regNo != null" >
+        REG_NO,
+      </if>
+      <if test="corpName != null" >
+        CORP_NAME,
+      </if>
+      <if test="addr != null" >
+        ADDR,
+      </if>
+      <if test="belongOrg != null" >
+        BELONG_ORG,
+      </if>
+      <if test="belongDistOrg != null" >
+        BELONG_DIST_ORG,
+      </if>
+      <if test="belongTrade != null" >
+        BELONG_TRADE,
+      </if>
+      <if test="econKind != null" >
+        ECON_KIND,
+      </if>
+      <if test="admitMain != null" >
+        ADMIT_MAIN,
+      </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="checkDate != null" >
+        CHECK_DATE,
+      </if>
+      <if test="operManIdentNo != null" >
+        OPER_MAN_IDENT_NO,
+      </if>
+      <if test="operManName != null" >
+        OPER_MAN_NAME,
+      </if>
+      <if test="corpStatus != null" >
+        CORP_STATUS,
+      </if>
+      <if test="regCapi != null" >
+        REG_CAPI,
+      </if>
+      <if test="fareTermStart != null" >
+        FARE_TERM_START,
+      </if>
+      <if test="fareTermEnd != null" >
+        FARE_TERM_END,
+      </if>
+      <if test="fareScope != null" >
+        FARE_SCOPE,
+      </if>
+      <if test="uniScid != null" >
+        UNI_SCID,
+      </if>
+      <if test="tel != null" >
+        TEL,
+      </if>
+      <if test="webUrl != null" >
+        WEB_URL,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="pracPersonNum != null" >
+        PRAC_PERSON_NUM,
+      </if>
+      <if test="orgInstCode != null" >
+        ORG_INST_CODE,
+      </if>
+      <if test="taxpayNum != null" >
+        TAXPAY_NUM,
+      </if>
+      <if test="staffSize != null" >
+        STAFF_SIZE,
+      </if>
+      <if test="englishName != null" >
+        ENGLISH_NAME,
+      </if>
+      <if test="formerName != null" >
+        FORMER_NAME,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createOrg != null" >
+        CREATE_ORG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="org != null" >
+        #{org,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="seqId != null" >
+        #{seqId,jdbcType=INTEGER},
+      </if>
+      <if test="regNo != null" >
+        #{regNo,jdbcType=VARCHAR},
+      </if>
+      <if test="corpName != null" >
+        #{corpName,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="belongOrg != null" >
+        #{belongOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="belongDistOrg != null" >
+        #{belongDistOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="belongTrade != null" >
+        #{belongTrade,jdbcType=VARCHAR},
+      </if>
+      <if test="econKind != null" >
+        #{econKind,jdbcType=VARCHAR},
+      </if>
+      <if test="admitMain != null" >
+        #{admitMain,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkDate != null" >
+        #{checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operManIdentNo != null" >
+        #{operManIdentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="operManName != null" >
+        #{operManName,jdbcType=VARCHAR},
+      </if>
+      <if test="corpStatus != null" >
+        #{corpStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="regCapi != null" >
+        #{regCapi,jdbcType=INTEGER},
+      </if>
+      <if test="fareTermStart != null" >
+        #{fareTermStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fareTermEnd != null" >
+        #{fareTermEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="fareScope != null" >
+        #{fareScope,jdbcType=VARCHAR},
+      </if>
+      <if test="uniScid != null" >
+        #{uniScid,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="webUrl != null" >
+        #{webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="pracPersonNum != null" >
+        #{pracPersonNum,jdbcType=INTEGER},
+      </if>
+      <if test="orgInstCode != null" >
+        #{orgInstCode,jdbcType=VARCHAR},
+      </if>
+      <if test="taxpayNum != null" >
+        #{taxpayNum,jdbcType=VARCHAR},
+      </if>
+      <if test="staffSize != null" >
+        #{staffSize,jdbcType=VARCHAR},
+      </if>
+      <if test="englishName != null" >
+        #{englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="formerName != null" >
+        #{formerName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOrg != null" >
+        #{createOrg,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pojo.TCorpExample" resultType="java.lang.Integer" >
+    select count(*) from t_corp
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_corp
+    <set >
+      <if test="record.uuid != null" >
+        UUID = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.org != null" >
+        ORG = #{record.org,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.seqId != null" >
+        SEQ_ID = #{record.seqId,jdbcType=INTEGER},
+      </if>
+      <if test="record.regNo != null" >
+        REG_NO = #{record.regNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpName != null" >
+        CORP_NAME = #{record.corpName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addr != null" >
+        ADDR = #{record.addr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.belongOrg != null" >
+        BELONG_ORG = #{record.belongOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.belongDistOrg != null" >
+        BELONG_DIST_ORG = #{record.belongDistOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.belongTrade != null" >
+        BELONG_TRADE = #{record.belongTrade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.econKind != null" >
+        ECON_KIND = #{record.econKind,jdbcType=VARCHAR},
+      </if>
+      <if test="record.admitMain != null" >
+        ADMIT_MAIN = #{record.admitMain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startDate != null" >
+        START_DATE = #{record.startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkDate != null" >
+        CHECK_DATE = #{record.checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operManIdentNo != null" >
+        OPER_MAN_IDENT_NO = #{record.operManIdentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operManName != null" >
+        OPER_MAN_NAME = #{record.operManName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpStatus != null" >
+        CORP_STATUS = #{record.corpStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regCapi != null" >
+        REG_CAPI = #{record.regCapi,jdbcType=INTEGER},
+      </if>
+      <if test="record.fareTermStart != null" >
+        FARE_TERM_START = #{record.fareTermStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fareTermEnd != null" >
+        FARE_TERM_END = #{record.fareTermEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fareScope != null" >
+        FARE_SCOPE = #{record.fareScope,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uniScid != null" >
+        UNI_SCID = #{record.uniScid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null" >
+        TEL = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.webUrl != null" >
+        WEB_URL = #{record.webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pracPersonNum != null" >
+        PRAC_PERSON_NUM = #{record.pracPersonNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgInstCode != null" >
+        ORG_INST_CODE = #{record.orgInstCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxpayNum != null" >
+        TAXPAY_NUM = #{record.taxpayNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffSize != null" >
+        STAFF_SIZE = #{record.staffSize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.englishName != null" >
+        ENGLISH_NAME = #{record.englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.formerName != null" >
+        FORMER_NAME = #{record.formerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createOrg != null" >
+        CREATE_ORG = #{record.createOrg,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_corp
+    set UUID = #{record.uuid,jdbcType=VARCHAR},
+      ORG = #{record.org,jdbcType=INTEGER},
+      ID = #{record.id,jdbcType=INTEGER},
+      SEQ_ID = #{record.seqId,jdbcType=INTEGER},
+      REG_NO = #{record.regNo,jdbcType=VARCHAR},
+      CORP_NAME = #{record.corpName,jdbcType=VARCHAR},
+      ADDR = #{record.addr,jdbcType=VARCHAR},
+      BELONG_ORG = #{record.belongOrg,jdbcType=VARCHAR},
+      BELONG_DIST_ORG = #{record.belongDistOrg,jdbcType=VARCHAR},
+      BELONG_TRADE = #{record.belongTrade,jdbcType=VARCHAR},
+      ECON_KIND = #{record.econKind,jdbcType=VARCHAR},
+      ADMIT_MAIN = #{record.admitMain,jdbcType=VARCHAR},
+      START_DATE = #{record.startDate,jdbcType=TIMESTAMP},
+      CHECK_DATE = #{record.checkDate,jdbcType=TIMESTAMP},
+      OPER_MAN_IDENT_NO = #{record.operManIdentNo,jdbcType=VARCHAR},
+      OPER_MAN_NAME = #{record.operManName,jdbcType=VARCHAR},
+      CORP_STATUS = #{record.corpStatus,jdbcType=VARCHAR},
+      REG_CAPI = #{record.regCapi,jdbcType=INTEGER},
+      FARE_TERM_START = #{record.fareTermStart,jdbcType=TIMESTAMP},
+      FARE_TERM_END = #{record.fareTermEnd,jdbcType=VARCHAR},
+      FARE_SCOPE = #{record.fareScope,jdbcType=VARCHAR},
+      UNI_SCID = #{record.uniScid,jdbcType=VARCHAR},
+      TEL = #{record.tel,jdbcType=VARCHAR},
+      WEB_URL = #{record.webUrl,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      PRAC_PERSON_NUM = #{record.pracPersonNum,jdbcType=INTEGER},
+      ORG_INST_CODE = #{record.orgInstCode,jdbcType=VARCHAR},
+      TAXPAY_NUM = #{record.taxpayNum,jdbcType=VARCHAR},
+      STAFF_SIZE = #{record.staffSize,jdbcType=VARCHAR},
+      ENGLISH_NAME = #{record.englishName,jdbcType=VARCHAR},
+      FORMER_NAME = #{record.formerName,jdbcType=VARCHAR},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      CREATE_ORG = #{record.createOrg,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.TCorp" >
+    update t_corp
+    <set >
+      <if test="org != null" >
+        ORG = #{org,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        ID = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="seqId != null" >
+        SEQ_ID = #{seqId,jdbcType=INTEGER},
+      </if>
+      <if test="regNo != null" >
+        REG_NO = #{regNo,jdbcType=VARCHAR},
+      </if>
+      <if test="corpName != null" >
+        CORP_NAME = #{corpName,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        ADDR = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="belongOrg != null" >
+        BELONG_ORG = #{belongOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="belongDistOrg != null" >
+        BELONG_DIST_ORG = #{belongDistOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="belongTrade != null" >
+        BELONG_TRADE = #{belongTrade,jdbcType=VARCHAR},
+      </if>
+      <if test="econKind != null" >
+        ECON_KIND = #{econKind,jdbcType=VARCHAR},
+      </if>
+      <if test="admitMain != null" >
+        ADMIT_MAIN = #{admitMain,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkDate != null" >
+        CHECK_DATE = #{checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operManIdentNo != null" >
+        OPER_MAN_IDENT_NO = #{operManIdentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="operManName != null" >
+        OPER_MAN_NAME = #{operManName,jdbcType=VARCHAR},
+      </if>
+      <if test="corpStatus != null" >
+        CORP_STATUS = #{corpStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="regCapi != null" >
+        REG_CAPI = #{regCapi,jdbcType=INTEGER},
+      </if>
+      <if test="fareTermStart != null" >
+        FARE_TERM_START = #{fareTermStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fareTermEnd != null" >
+        FARE_TERM_END = #{fareTermEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="fareScope != null" >
+        FARE_SCOPE = #{fareScope,jdbcType=VARCHAR},
+      </if>
+      <if test="uniScid != null" >
+        UNI_SCID = #{uniScid,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        TEL = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="webUrl != null" >
+        WEB_URL = #{webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="pracPersonNum != null" >
+        PRAC_PERSON_NUM = #{pracPersonNum,jdbcType=INTEGER},
+      </if>
+      <if test="orgInstCode != null" >
+        ORG_INST_CODE = #{orgInstCode,jdbcType=VARCHAR},
+      </if>
+      <if test="taxpayNum != null" >
+        TAXPAY_NUM = #{taxpayNum,jdbcType=VARCHAR},
+      </if>
+      <if test="staffSize != null" >
+        STAFF_SIZE = #{staffSize,jdbcType=VARCHAR},
+      </if>
+      <if test="englishName != null" >
+        ENGLISH_NAME = #{englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="formerName != null" >
+        FORMER_NAME = #{formerName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOrg != null" >
+        CREATE_ORG = #{createOrg,jdbcType=INTEGER},
+      </if>
+    </set>
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.TCorp" >
+    update t_corp
+    set ORG = #{org,jdbcType=INTEGER},
+      ID = #{id,jdbcType=INTEGER},
+      SEQ_ID = #{seqId,jdbcType=INTEGER},
+      REG_NO = #{regNo,jdbcType=VARCHAR},
+      CORP_NAME = #{corpName,jdbcType=VARCHAR},
+      ADDR = #{addr,jdbcType=VARCHAR},
+      BELONG_ORG = #{belongOrg,jdbcType=VARCHAR},
+      BELONG_DIST_ORG = #{belongDistOrg,jdbcType=VARCHAR},
+      BELONG_TRADE = #{belongTrade,jdbcType=VARCHAR},
+      ECON_KIND = #{econKind,jdbcType=VARCHAR},
+      ADMIT_MAIN = #{admitMain,jdbcType=VARCHAR},
+      START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      CHECK_DATE = #{checkDate,jdbcType=TIMESTAMP},
+      OPER_MAN_IDENT_NO = #{operManIdentNo,jdbcType=VARCHAR},
+      OPER_MAN_NAME = #{operManName,jdbcType=VARCHAR},
+      CORP_STATUS = #{corpStatus,jdbcType=VARCHAR},
+      REG_CAPI = #{regCapi,jdbcType=INTEGER},
+      FARE_TERM_START = #{fareTermStart,jdbcType=TIMESTAMP},
+      FARE_TERM_END = #{fareTermEnd,jdbcType=VARCHAR},
+      FARE_SCOPE = #{fareScope,jdbcType=VARCHAR},
+      UNI_SCID = #{uniScid,jdbcType=VARCHAR},
+      TEL = #{tel,jdbcType=VARCHAR},
+      WEB_URL = #{webUrl,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      PRAC_PERSON_NUM = #{pracPersonNum,jdbcType=INTEGER},
+      ORG_INST_CODE = #{orgInstCode,jdbcType=VARCHAR},
+      TAXPAY_NUM = #{taxpayNum,jdbcType=VARCHAR},
+      STAFF_SIZE = #{staffSize,jdbcType=VARCHAR},
+      ENGLISH_NAME = #{englishName,jdbcType=VARCHAR},
+      FORMER_NAME = #{formerName,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      CREATE_ORG = #{createOrg,jdbcType=INTEGER}
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+  
+  
+  	<!-- 通过公司的uuid 查询该公司所有的股东 -->
+  <resultMap id="TCorpStock" type="com.pojo.TCorpStock" >
+    <id column="UUID" property="uuid" jdbcType="VARCHAR" />
+    <result column="ORG" property="org" jdbcType="INTEGER" />
+    <result column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SEQ_ID" property="seqId" jdbcType="INTEGER" />
+    <result column="STOCK_TYPE" property="stockType" jdbcType="VARCHAR" />
+    <result column="COUNTRY" property="country" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_TYPE" property="certificateType" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_NO" property="certificateNo" jdbcType="VARCHAR" />
+    <result column="STOCK_NAME" property="stockName" jdbcType="VARCHAR" />
+    <result column="STOCK_CAPI_TYPE" property="stockCapiType" jdbcType="INTEGER" />
+    <result column="STOCK_CAPI" property="stockCapi" jdbcType="INTEGER" />
+    <result column="STOCK_CAPI_DOLLAR" property="stockCapiDollar" jdbcType="INTEGER" />
+    <result column="STOCK_CAPI_RMB" property="stockCapiRmb" jdbcType="INTEGER" />
+    <result column="STOCK_PERCENT" property="stockPercent" jdbcType="VARCHAR" />
+    <result column="STOCK_RATE_RMB" property="stockRateRmb" jdbcType="INTEGER" />
+    <result column="STOCK_RATE_DOLLAR" property="stockRateDollar" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="findtcorpstock" resultMap="TCorpStock" parameterType="java.lang.String">
+  SELECT
+	a.*
+	FROM
+	t_corp_stock a
+	JOIN t_m_corp_corp_stock b ON a.uuid = b.sub_uuid
+	WHERE
+	b.UUID = #{uuid,jdbcType=VARCHAR}
+  </select>
+  
+  <!--   通过公司的uuid查询公司分公司信息 -->
+  <resultMap id="TCorpDist" type="com.pojo.TCorpDist" >
+    <id column="UUID" property="uuid" jdbcType="VARCHAR" />
+    <result column="ORG" property="org" jdbcType="INTEGER" />
+    <result column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SEQ_ID" property="seqId" jdbcType="INTEGER" />
+    <result column="DIST_REG_NO" property="distRegNo" jdbcType="VARCHAR" />
+    <result column="DIST_NAME" property="distName" jdbcType="VARCHAR" />
+    <result column="DIST_BELONG_ORG" property="distBelongOrg" jdbcType="VARCHAR" />
+    <result column="DIST_CORP_ORG" property="distCorpOrg" jdbcType="INTEGER" />
+    <result column="DIST_CORP_ID" property="distCorpId" jdbcType="INTEGER" />
+    <result column="DIST_CORP_SEQ_ID" property="distCorpSeqId" jdbcType="INTEGER" />
+    <result column="FARE_PLACE" property="farePlace" jdbcType="VARCHAR" />
+    <result column="OPER_MAN_IDENT_NO" property="operManIdentNo" jdbcType="VARCHAR" />
+    <result column="OPER_MAN_NAME" property="operManName" jdbcType="VARCHAR" />
+    <result column="FARE_SCOPE" property="fareScope" jdbcType="VARCHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="CHECK_DATE" property="checkDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="findtcorpdisk" resultMap="TCorpDist" parameterType="java.lang.String">
+ SELECT
+	a.*
+	FROM
+	t_corp_dist a
+	JOIN t_m_corp_corp_dist b ON a.uuid = b.sub_uuid
+	WHERE
+	b.UUID = #{uuid,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <!--   通过公司的uuid查询公司高管信息 -->
+  <resultMap id="TCorpPertains" type="com.pojo.TCorpPertains" >
+    <id column="UUID" property="uuid" jdbcType="VARCHAR" />
+    <result column="ORG" property="org" jdbcType="INTEGER" />
+    <result column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SEQ_ID" property="seqId" jdbcType="INTEGER" />
+    <result column="CERTIFICATE_TYPE" property="certificateType" jdbcType="VARCHAR" />
+    <result column="PERSON_NAME" property="personName" jdbcType="VARCHAR" />
+    <result column="PERSON_TYPE" property="personType" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_NO" property="certificateNo" jdbcType="VARCHAR" />
+    <result column="SELECT_TYPE" property="selectType" jdbcType="VARCHAR" />
+    <result column="HOLDPOST_START" property="holdpostStart" jdbcType="TIMESTAMP" />
+    <result column="HOLDPOST_EDN" property="holdpostEdn" jdbcType="TIMESTAMP" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="AGE" property="age" jdbcType="VARCHAR" />
+    <result column="COUNTRY" property="country" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="findtcorppertains" resultMap="TCorpPertains" parameterType="java.lang.String">
+ SELECT
+	a.*
+	FROM
+	t_corp_pertains a
+	JOIN t_m_corp_corp_pertains b ON a.uuid = b.sub_uuid
+	WHERE
+	b.UUID = #{uuid,jdbcType=VARCHAR}
+  </select>
+</mapper>

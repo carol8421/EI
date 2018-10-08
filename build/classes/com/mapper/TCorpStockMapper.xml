@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.TCorpStockMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.TCorpStock" >
+    <id column="UUID" property="uuid" jdbcType="VARCHAR" />
+    <result column="ORG" property="org" jdbcType="INTEGER" />
+    <result column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SEQ_ID" property="seqId" jdbcType="INTEGER" />
+    <result column="STOCK_TYPE" property="stockType" jdbcType="VARCHAR" />
+    <result column="COUNTRY" property="country" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_TYPE" property="certificateType" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_NO" property="certificateNo" jdbcType="VARCHAR" />
+    <result column="STOCK_NAME" property="stockName" jdbcType="VARCHAR" />
+    <result column="STOCK_CAPI_TYPE" property="stockCapiType" jdbcType="INTEGER" />
+    <result column="STOCK_CAPI" property="stockCapi" jdbcType="INTEGER" />
+    <result column="STOCK_CAPI_DOLLAR" property="stockCapiDollar" jdbcType="INTEGER" />
+    <result column="STOCK_CAPI_RMB" property="stockCapiRmb" jdbcType="INTEGER" />
+    <result column="STOCK_PERCENT" property="stockPercent" jdbcType="VARCHAR" />
+    <result column="STOCK_RATE_RMB" property="stockRateRmb" jdbcType="INTEGER" />
+    <result column="STOCK_RATE_DOLLAR" property="stockRateDollar" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UUID, ORG, ID, SEQ_ID, STOCK_TYPE, COUNTRY, CERTIFICATE_TYPE, CERTIFICATE_NO, STOCK_NAME, 
+    STOCK_CAPI_TYPE, STOCK_CAPI, STOCK_CAPI_DOLLAR, STOCK_CAPI_RMB, STOCK_PERCENT, STOCK_RATE_RMB, 
+    STOCK_RATE_DOLLAR, CREATE_DATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pojo.TCorpStockExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_corp_stock
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_corp_stock
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_corp_stock
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pojo.TCorpStockExample" >
+    delete from t_corp_stock
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pojo.TCorpStock" >
+    insert into t_corp_stock (UUID, ORG, ID, 
+      SEQ_ID, STOCK_TYPE, COUNTRY, 
+      CERTIFICATE_TYPE, CERTIFICATE_NO, STOCK_NAME, 
+      STOCK_CAPI_TYPE, STOCK_CAPI, STOCK_CAPI_DOLLAR, 
+      STOCK_CAPI_RMB, STOCK_PERCENT, STOCK_RATE_RMB, 
+      STOCK_RATE_DOLLAR, CREATE_DATE)
+    values (#{uuid,jdbcType=VARCHAR}, #{org,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, 
+      #{seqId,jdbcType=INTEGER}, #{stockType,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{certificateType,jdbcType=VARCHAR}, #{certificateNo,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, 
+      #{stockCapiType,jdbcType=INTEGER}, #{stockCapi,jdbcType=INTEGER}, #{stockCapiDollar,jdbcType=INTEGER}, 
+      #{stockCapiRmb,jdbcType=INTEGER}, #{stockPercent,jdbcType=VARCHAR}, #{stockRateRmb,jdbcType=INTEGER}, 
+      #{stockRateDollar,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.TCorpStock" >
+    insert into t_corp_stock
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="org != null" >
+        ORG,
+      </if>
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="seqId != null" >
+        SEQ_ID,
+      </if>
+      <if test="stockType != null" >
+        STOCK_TYPE,
+      </if>
+      <if test="country != null" >
+        COUNTRY,
+      </if>
+      <if test="certificateType != null" >
+        CERTIFICATE_TYPE,
+      </if>
+      <if test="certificateNo != null" >
+        CERTIFICATE_NO,
+      </if>
+      <if test="stockName != null" >
+        STOCK_NAME,
+      </if>
+      <if test="stockCapiType != null" >
+        STOCK_CAPI_TYPE,
+      </if>
+      <if test="stockCapi != null" >
+        STOCK_CAPI,
+      </if>
+      <if test="stockCapiDollar != null" >
+        STOCK_CAPI_DOLLAR,
+      </if>
+      <if test="stockCapiRmb != null" >
+        STOCK_CAPI_RMB,
+      </if>
+      <if test="stockPercent != null" >
+        STOCK_PERCENT,
+      </if>
+      <if test="stockRateRmb != null" >
+        STOCK_RATE_RMB,
+      </if>
+      <if test="stockRateDollar != null" >
+        STOCK_RATE_DOLLAR,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="org != null" >
+        #{org,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="seqId != null" >
+        #{seqId,jdbcType=INTEGER},
+      </if>
+      <if test="stockType != null" >
+        #{stockType,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateType != null" >
+        #{certificateType,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null" >
+        #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stockName != null" >
+        #{stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="stockCapiType != null" >
+        #{stockCapiType,jdbcType=INTEGER},
+      </if>
+      <if test="stockCapi != null" >
+        #{stockCapi,jdbcType=INTEGER},
+      </if>
+      <if test="stockCapiDollar != null" >
+        #{stockCapiDollar,jdbcType=INTEGER},
+      </if>
+      <if test="stockCapiRmb != null" >
+        #{stockCapiRmb,jdbcType=INTEGER},
+      </if>
+      <if test="stockPercent != null" >
+        #{stockPercent,jdbcType=VARCHAR},
+      </if>
+      <if test="stockRateRmb != null" >
+        #{stockRateRmb,jdbcType=INTEGER},
+      </if>
+      <if test="stockRateDollar != null" >
+        #{stockRateDollar,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pojo.TCorpStockExample" resultType="java.lang.Integer" >
+    select count(*) from t_corp_stock
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_corp_stock
+    <set >
+      <if test="record.uuid != null" >
+        UUID = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.org != null" >
+        ORG = #{record.org,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.seqId != null" >
+        SEQ_ID = #{record.seqId,jdbcType=INTEGER},
+      </if>
+      <if test="record.stockType != null" >
+        STOCK_TYPE = #{record.stockType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        COUNTRY = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateType != null" >
+        CERTIFICATE_TYPE = #{record.certificateType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateNo != null" >
+        CERTIFICATE_NO = #{record.certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockName != null" >
+        STOCK_NAME = #{record.stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockCapiType != null" >
+        STOCK_CAPI_TYPE = #{record.stockCapiType,jdbcType=INTEGER},
+      </if>
+      <if test="record.stockCapi != null" >
+        STOCK_CAPI = #{record.stockCapi,jdbcType=INTEGER},
+      </if>
+      <if test="record.stockCapiDollar != null" >
+        STOCK_CAPI_DOLLAR = #{record.stockCapiDollar,jdbcType=INTEGER},
+      </if>
+      <if test="record.stockCapiRmb != null" >
+        STOCK_CAPI_RMB = #{record.stockCapiRmb,jdbcType=INTEGER},
+      </if>
+      <if test="record.stockPercent != null" >
+        STOCK_PERCENT = #{record.stockPercent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockRateRmb != null" >
+        STOCK_RATE_RMB = #{record.stockRateRmb,jdbcType=INTEGER},
+      </if>
+      <if test="record.stockRateDollar != null" >
+        STOCK_RATE_DOLLAR = #{record.stockRateDollar,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null" >
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_corp_stock
+    set UUID = #{record.uuid,jdbcType=VARCHAR},
+      ORG = #{record.org,jdbcType=INTEGER},
+      ID = #{record.id,jdbcType=INTEGER},
+      SEQ_ID = #{record.seqId,jdbcType=INTEGER},
+      STOCK_TYPE = #{record.stockType,jdbcType=VARCHAR},
+      COUNTRY = #{record.country,jdbcType=VARCHAR},
+      CERTIFICATE_TYPE = #{record.certificateType,jdbcType=VARCHAR},
+      CERTIFICATE_NO = #{record.certificateNo,jdbcType=VARCHAR},
+      STOCK_NAME = #{record.stockName,jdbcType=VARCHAR},
+      STOCK_CAPI_TYPE = #{record.stockCapiType,jdbcType=INTEGER},
+      STOCK_CAPI = #{record.stockCapi,jdbcType=INTEGER},
+      STOCK_CAPI_DOLLAR = #{record.stockCapiDollar,jdbcType=INTEGER},
+      STOCK_CAPI_RMB = #{record.stockCapiRmb,jdbcType=INTEGER},
+      STOCK_PERCENT = #{record.stockPercent,jdbcType=VARCHAR},
+      STOCK_RATE_RMB = #{record.stockRateRmb,jdbcType=INTEGER},
+      STOCK_RATE_DOLLAR = #{record.stockRateDollar,jdbcType=INTEGER},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.TCorpStock" >
+    update t_corp_stock
+    <set >
+      <if test="org != null" >
+        ORG = #{org,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        ID = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="seqId != null" >
+        SEQ_ID = #{seqId,jdbcType=INTEGER},
+      </if>
+      <if test="stockType != null" >
+        STOCK_TYPE = #{stockType,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        COUNTRY = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateType != null" >
+        CERTIFICATE_TYPE = #{certificateType,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null" >
+        CERTIFICATE_NO = #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stockName != null" >
+        STOCK_NAME = #{stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="stockCapiType != null" >
+        STOCK_CAPI_TYPE = #{stockCapiType,jdbcType=INTEGER},
+      </if>
+      <if test="stockCapi != null" >
+        STOCK_CAPI = #{stockCapi,jdbcType=INTEGER},
+      </if>
+      <if test="stockCapiDollar != null" >
+        STOCK_CAPI_DOLLAR = #{stockCapiDollar,jdbcType=INTEGER},
+      </if>
+      <if test="stockCapiRmb != null" >
+        STOCK_CAPI_RMB = #{stockCapiRmb,jdbcType=INTEGER},
+      </if>
+      <if test="stockPercent != null" >
+        STOCK_PERCENT = #{stockPercent,jdbcType=VARCHAR},
+      </if>
+      <if test="stockRateRmb != null" >
+        STOCK_RATE_RMB = #{stockRateRmb,jdbcType=INTEGER},
+      </if>
+      <if test="stockRateDollar != null" >
+        STOCK_RATE_DOLLAR = #{stockRateDollar,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.TCorpStock" >
+    update t_corp_stock
+    set ORG = #{org,jdbcType=INTEGER},
+      ID = #{id,jdbcType=INTEGER},
+      SEQ_ID = #{seqId,jdbcType=INTEGER},
+      STOCK_TYPE = #{stockType,jdbcType=VARCHAR},
+      COUNTRY = #{country,jdbcType=VARCHAR},
+      CERTIFICATE_TYPE = #{certificateType,jdbcType=VARCHAR},
+      CERTIFICATE_NO = #{certificateNo,jdbcType=VARCHAR},
+      STOCK_NAME = #{stockName,jdbcType=VARCHAR},
+      STOCK_CAPI_TYPE = #{stockCapiType,jdbcType=INTEGER},
+      STOCK_CAPI = #{stockCapi,jdbcType=INTEGER},
+      STOCK_CAPI_DOLLAR = #{stockCapiDollar,jdbcType=INTEGER},
+      STOCK_CAPI_RMB = #{stockCapiRmb,jdbcType=INTEGER},
+      STOCK_PERCENT = #{stockPercent,jdbcType=VARCHAR},
+      STOCK_RATE_RMB = #{stockRateRmb,jdbcType=INTEGER},
+      STOCK_RATE_DOLLAR = #{stockRateDollar,jdbcType=INTEGER},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+  
+  
+<!--   通过股东的uuid查询公司的信息 -->
+ <resultMap id="TCorp" type="com.pojo.TCorp" >
+    <id column="UUID" property="uuid" jdbcType="VARCHAR" />
+    <result column="ORG" property="org" jdbcType="INTEGER" />
+    <result column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SEQ_ID" property="seqId" jdbcType="INTEGER" />
+    <result column="REG_NO" property="regNo" jdbcType="VARCHAR" />
+    <result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+    <result column="ADDR" property="addr" jdbcType="VARCHAR" />
+    <result column="BELONG_ORG" property="belongOrg" jdbcType="VARCHAR" />
+    <result column="BELONG_DIST_ORG" property="belongDistOrg" jdbcType="VARCHAR" />
+    <result column="BELONG_TRADE" property="belongTrade" jdbcType="VARCHAR" />
+    <result column="ECON_KIND" property="econKind" jdbcType="VARCHAR" />
+    <result column="ADMIT_MAIN" property="admitMain" jdbcType="VARCHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="CHECK_DATE" property="checkDate" jdbcType="TIMESTAMP" />
+    <result column="OPER_MAN_IDENT_NO" property="operManIdentNo" jdbcType="VARCHAR" />
+    <result column="OPER_MAN_NAME" property="operManName" jdbcType="VARCHAR" />
+    <result column="CORP_STATUS" property="corpStatus" jdbcType="VARCHAR" />
+    <result column="REG_CAPI" property="regCapi" jdbcType="INTEGER" />
+    <result column="FARE_TERM_START" property="fareTermStart" jdbcType="TIMESTAMP" />
+    <result column="FARE_TERM_END" property="fareTermEnd" jdbcType="VARCHAR" />
+    <result column="FARE_SCOPE" property="fareScope" jdbcType="VARCHAR" />
+    <result column="UNI_SCID" property="uniScid" jdbcType="VARCHAR" />
+    <result column="TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="WEB_URL" property="webUrl" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="PRAC_PERSON_NUM" property="pracPersonNum" jdbcType="INTEGER" />
+    <result column="ORG_INST_CODE" property="orgInstCode" jdbcType="VARCHAR" />
+    <result column="TAXPAY_NUM" property="taxpayNum" jdbcType="VARCHAR" />
+    <result column="STAFF_SIZE" property="staffSize" jdbcType="VARCHAR" />
+    <result column="ENGLISH_NAME" property="englishName" jdbcType="VARCHAR" />
+    <result column="FORMER_NAME" property="formerName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ORG" property="createOrg" jdbcType="INTEGER" />
+  </resultMap>
+<select id="findtcorp" resultMap="TCorp" parameterType="java.lang.String">
+  SELECT
+	a.*
+	FROM
+	t_corp a
+	JOIN t_m_corp_corp_stock b ON a.uuid = b.uuid
+	WHERE
+	b.sub_uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+</mapper>

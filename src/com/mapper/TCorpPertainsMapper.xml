@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.TCorpPertainsMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.TCorpPertains" >
+    <id column="UUID" property="uuid" jdbcType="VARCHAR" />
+    <result column="ORG" property="org" jdbcType="INTEGER" />
+    <result column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SEQ_ID" property="seqId" jdbcType="INTEGER" />
+    <result column="CERTIFICATE_TYPE" property="certificateType" jdbcType="VARCHAR" />
+    <result column="PERSON_NAME" property="personName" jdbcType="VARCHAR" />
+    <result column="PERSON_TYPE" property="personType" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_NO" property="certificateNo" jdbcType="VARCHAR" />
+    <result column="SELECT_TYPE" property="selectType" jdbcType="VARCHAR" />
+    <result column="HOLDPOST_START" property="holdpostStart" jdbcType="TIMESTAMP" />
+    <result column="HOLDPOST_EDN" property="holdpostEdn" jdbcType="TIMESTAMP" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="AGE" property="age" jdbcType="VARCHAR" />
+    <result column="COUNTRY" property="country" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UUID, ORG, ID, SEQ_ID, CERTIFICATE_TYPE, PERSON_NAME, PERSON_TYPE, CERTIFICATE_NO, 
+    SELECT_TYPE, HOLDPOST_START, HOLDPOST_EDN, SEX, AGE, COUNTRY, CREATE_DATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pojo.TCorpPertainsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_corp_pertains
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_corp_pertains
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_corp_pertains
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pojo.TCorpPertainsExample" >
+    delete from t_corp_pertains
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pojo.TCorpPertains" >
+    insert into t_corp_pertains (UUID, ORG, ID, 
+      SEQ_ID, CERTIFICATE_TYPE, PERSON_NAME, 
+      PERSON_TYPE, CERTIFICATE_NO, SELECT_TYPE, 
+      HOLDPOST_START, HOLDPOST_EDN, SEX, 
+      AGE, COUNTRY, CREATE_DATE
+      )
+    values (#{uuid,jdbcType=VARCHAR}, #{org,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, 
+      #{seqId,jdbcType=INTEGER}, #{certificateType,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, 
+      #{personType,jdbcType=VARCHAR}, #{certificateNo,jdbcType=VARCHAR}, #{selectType,jdbcType=VARCHAR}, 
+      #{holdpostStart,jdbcType=TIMESTAMP}, #{holdpostEdn,jdbcType=TIMESTAMP}, #{sex,jdbcType=VARCHAR}, 
+      #{age,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.TCorpPertains" >
+    insert into t_corp_pertains
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="org != null" >
+        ORG,
+      </if>
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="seqId != null" >
+        SEQ_ID,
+      </if>
+      <if test="certificateType != null" >
+        CERTIFICATE_TYPE,
+      </if>
+      <if test="personName != null" >
+        PERSON_NAME,
+      </if>
+      <if test="personType != null" >
+        PERSON_TYPE,
+      </if>
+      <if test="certificateNo != null" >
+        CERTIFICATE_NO,
+      </if>
+      <if test="selectType != null" >
+        SELECT_TYPE,
+      </if>
+      <if test="holdpostStart != null" >
+        HOLDPOST_START,
+      </if>
+      <if test="holdpostEdn != null" >
+        HOLDPOST_EDN,
+      </if>
+      <if test="sex != null" >
+        SEX,
+      </if>
+      <if test="age != null" >
+        AGE,
+      </if>
+      <if test="country != null" >
+        COUNTRY,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="org != null" >
+        #{org,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="seqId != null" >
+        #{seqId,jdbcType=INTEGER},
+      </if>
+      <if test="certificateType != null" >
+        #{certificateType,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null" >
+        #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="personType != null" >
+        #{personType,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null" >
+        #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="selectType != null" >
+        #{selectType,jdbcType=VARCHAR},
+      </if>
+      <if test="holdpostStart != null" >
+        #{holdpostStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="holdpostEdn != null" >
+        #{holdpostEdn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pojo.TCorpPertainsExample" resultType="java.lang.Integer" >
+    select count(*) from t_corp_pertains
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_corp_pertains
+    <set >
+      <if test="record.uuid != null" >
+        UUID = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.org != null" >
+        ORG = #{record.org,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.seqId != null" >
+        SEQ_ID = #{record.seqId,jdbcType=INTEGER},
+      </if>
+      <if test="record.certificateType != null" >
+        CERTIFICATE_TYPE = #{record.certificateType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personName != null" >
+        PERSON_NAME = #{record.personName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personType != null" >
+        PERSON_TYPE = #{record.personType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateNo != null" >
+        CERTIFICATE_NO = #{record.certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selectType != null" >
+        SELECT_TYPE = #{record.selectType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.holdpostStart != null" >
+        HOLDPOST_START = #{record.holdpostStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.holdpostEdn != null" >
+        HOLDPOST_EDN = #{record.holdpostEdn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sex != null" >
+        SEX = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.age != null" >
+        AGE = #{record.age,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        COUNTRY = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_corp_pertains
+    set UUID = #{record.uuid,jdbcType=VARCHAR},
+      ORG = #{record.org,jdbcType=INTEGER},
+      ID = #{record.id,jdbcType=INTEGER},
+      SEQ_ID = #{record.seqId,jdbcType=INTEGER},
+      CERTIFICATE_TYPE = #{record.certificateType,jdbcType=VARCHAR},
+      PERSON_NAME = #{record.personName,jdbcType=VARCHAR},
+      PERSON_TYPE = #{record.personType,jdbcType=VARCHAR},
+      CERTIFICATE_NO = #{record.certificateNo,jdbcType=VARCHAR},
+      SELECT_TYPE = #{record.selectType,jdbcType=VARCHAR},
+      HOLDPOST_START = #{record.holdpostStart,jdbcType=TIMESTAMP},
+      HOLDPOST_EDN = #{record.holdpostEdn,jdbcType=TIMESTAMP},
+      SEX = #{record.sex,jdbcType=VARCHAR},
+      AGE = #{record.age,jdbcType=VARCHAR},
+      COUNTRY = #{record.country,jdbcType=VARCHAR},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.TCorpPertains" >
+    update t_corp_pertains
+    <set >
+      <if test="org != null" >
+        ORG = #{org,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        ID = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="seqId != null" >
+        SEQ_ID = #{seqId,jdbcType=INTEGER},
+      </if>
+      <if test="certificateType != null" >
+        CERTIFICATE_TYPE = #{certificateType,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null" >
+        PERSON_NAME = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="personType != null" >
+        PERSON_TYPE = #{personType,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null" >
+        CERTIFICATE_NO = #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="selectType != null" >
+        SELECT_TYPE = #{selectType,jdbcType=VARCHAR},
+      </if>
+      <if test="holdpostStart != null" >
+        HOLDPOST_START = #{holdpostStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="holdpostEdn != null" >
+        HOLDPOST_EDN = #{holdpostEdn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sex != null" >
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        AGE = #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        COUNTRY = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.TCorpPertains" >
+    update t_corp_pertains
+    set ORG = #{org,jdbcType=INTEGER},
+      ID = #{id,jdbcType=INTEGER},
+      SEQ_ID = #{seqId,jdbcType=INTEGER},
+      CERTIFICATE_TYPE = #{certificateType,jdbcType=VARCHAR},
+      PERSON_NAME = #{personName,jdbcType=VARCHAR},
+      PERSON_TYPE = #{personType,jdbcType=VARCHAR},
+      CERTIFICATE_NO = #{certificateNo,jdbcType=VARCHAR},
+      SELECT_TYPE = #{selectType,jdbcType=VARCHAR},
+      HOLDPOST_START = #{holdpostStart,jdbcType=TIMESTAMP},
+      HOLDPOST_EDN = #{holdpostEdn,jdbcType=TIMESTAMP},
+      SEX = #{sex,jdbcType=VARCHAR},
+      AGE = #{age,jdbcType=VARCHAR},
+      COUNTRY = #{country,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+  
+<!--   通过高管的uuid查询公司信息 -->
+  <resultMap id="TCorp" type="com.pojo.TCorp" >
+    <id column="UUID" property="uuid" jdbcType="VARCHAR" />
+    <result column="ORG" property="org" jdbcType="INTEGER" />
+    <result column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SEQ_ID" property="seqId" jdbcType="INTEGER" />
+    <result column="REG_NO" property="regNo" jdbcType="VARCHAR" />
+    <result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+    <result column="ADDR" property="addr" jdbcType="VARCHAR" />
+    <result column="BELONG_ORG" property="belongOrg" jdbcType="VARCHAR" />
+    <result column="BELONG_DIST_ORG" property="belongDistOrg" jdbcType="VARCHAR" />
+    <result column="BELONG_TRADE" property="belongTrade" jdbcType="VARCHAR" />
+    <result column="ECON_KIND" property="econKind" jdbcType="VARCHAR" />
+    <result column="ADMIT_MAIN" property="admitMain" jdbcType="VARCHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="CHECK_DATE" property="checkDate" jdbcType="TIMESTAMP" />
+    <result column="OPER_MAN_IDENT_NO" property="operManIdentNo" jdbcType="VARCHAR" />
+    <result column="OPER_MAN_NAME" property="operManName" jdbcType="VARCHAR" />
+    <result column="CORP_STATUS" property="corpStatus" jdbcType="VARCHAR" />
+    <result column="REG_CAPI" property="regCapi" jdbcType="INTEGER" />
+    <result column="FARE_TERM_START" property="fareTermStart" jdbcType="TIMESTAMP" />
+    <result column="FARE_TERM_END" property="fareTermEnd" jdbcType="VARCHAR" />
+    <result column="FARE_SCOPE" property="fareScope" jdbcType="VARCHAR" />
+    <result column="UNI_SCID" property="uniScid" jdbcType="VARCHAR" />
+    <result column="TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="WEB_URL" property="webUrl" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="PRAC_PERSON_NUM" property="pracPersonNum" jdbcType="INTEGER" />
+    <result column="ORG_INST_CODE" property="orgInstCode" jdbcType="VARCHAR" />
+    <result column="TAXPAY_NUM" property="taxpayNum" jdbcType="VARCHAR" />
+    <result column="STAFF_SIZE" property="staffSize" jdbcType="VARCHAR" />
+    <result column="ENGLISH_NAME" property="englishName" jdbcType="VARCHAR" />
+    <result column="FORMER_NAME" property="formerName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ORG" property="createOrg" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="findtcorp" resultMap="TCorp" parameterType="java.lang.String">
+  SELECT
+	a.*
+	FROM
+	t_corp a
+	JOIN t_m_corp_corp_pertains b ON a.uuid = b.uuid
+	WHERE
+	b.sub_uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+</mapper>

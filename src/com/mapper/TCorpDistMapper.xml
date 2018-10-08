@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.TCorpDistMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.TCorpDist" >
+    <id column="UUID" property="uuid" jdbcType="VARCHAR" />
+    <result column="ORG" property="org" jdbcType="INTEGER" />
+    <result column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SEQ_ID" property="seqId" jdbcType="INTEGER" />
+    <result column="DIST_REG_NO" property="distRegNo" jdbcType="VARCHAR" />
+    <result column="DIST_NAME" property="distName" jdbcType="VARCHAR" />
+    <result column="DIST_BELONG_ORG" property="distBelongOrg" jdbcType="VARCHAR" />
+    <result column="DIST_CORP_ORG" property="distCorpOrg" jdbcType="INTEGER" />
+    <result column="DIST_CORP_ID" property="distCorpId" jdbcType="INTEGER" />
+    <result column="DIST_CORP_SEQ_ID" property="distCorpSeqId" jdbcType="INTEGER" />
+    <result column="FARE_PLACE" property="farePlace" jdbcType="VARCHAR" />
+    <result column="OPER_MAN_IDENT_NO" property="operManIdentNo" jdbcType="VARCHAR" />
+    <result column="OPER_MAN_NAME" property="operManName" jdbcType="VARCHAR" />
+    <result column="FARE_SCOPE" property="fareScope" jdbcType="VARCHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="CHECK_DATE" property="checkDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UUID, ORG, ID, SEQ_ID, DIST_REG_NO, DIST_NAME, DIST_BELONG_ORG, DIST_CORP_ORG, DIST_CORP_ID, 
+    DIST_CORP_SEQ_ID, FARE_PLACE, OPER_MAN_IDENT_NO, OPER_MAN_NAME, FARE_SCOPE, START_DATE, 
+    CHECK_DATE, CREATE_DATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pojo.TCorpDistExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_corp_dist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_corp_dist
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_corp_dist
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pojo.TCorpDistExample" >
+    delete from t_corp_dist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pojo.TCorpDist" >
+    insert into t_corp_dist (UUID, ORG, ID, 
+      SEQ_ID, DIST_REG_NO, DIST_NAME, 
+      DIST_BELONG_ORG, DIST_CORP_ORG, DIST_CORP_ID, 
+      DIST_CORP_SEQ_ID, FARE_PLACE, OPER_MAN_IDENT_NO, 
+      OPER_MAN_NAME, FARE_SCOPE, START_DATE, 
+      CHECK_DATE, CREATE_DATE)
+    values (#{uuid,jdbcType=VARCHAR}, #{org,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, 
+      #{seqId,jdbcType=INTEGER}, #{distRegNo,jdbcType=VARCHAR}, #{distName,jdbcType=VARCHAR}, 
+      #{distBelongOrg,jdbcType=VARCHAR}, #{distCorpOrg,jdbcType=INTEGER}, #{distCorpId,jdbcType=INTEGER}, 
+      #{distCorpSeqId,jdbcType=INTEGER}, #{farePlace,jdbcType=VARCHAR}, #{operManIdentNo,jdbcType=VARCHAR}, 
+      #{operManName,jdbcType=VARCHAR}, #{fareScope,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, 
+      #{checkDate,jdbcType=TIMESTAMP}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.TCorpDist" >
+    insert into t_corp_dist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="org != null" >
+        ORG,
+      </if>
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="seqId != null" >
+        SEQ_ID,
+      </if>
+      <if test="distRegNo != null" >
+        DIST_REG_NO,
+      </if>
+      <if test="distName != null" >
+        DIST_NAME,
+      </if>
+      <if test="distBelongOrg != null" >
+        DIST_BELONG_ORG,
+      </if>
+      <if test="distCorpOrg != null" >
+        DIST_CORP_ORG,
+      </if>
+      <if test="distCorpId != null" >
+        DIST_CORP_ID,
+      </if>
+      <if test="distCorpSeqId != null" >
+        DIST_CORP_SEQ_ID,
+      </if>
+      <if test="farePlace != null" >
+        FARE_PLACE,
+      </if>
+      <if test="operManIdentNo != null" >
+        OPER_MAN_IDENT_NO,
+      </if>
+      <if test="operManName != null" >
+        OPER_MAN_NAME,
+      </if>
+      <if test="fareScope != null" >
+        FARE_SCOPE,
+      </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="checkDate != null" >
+        CHECK_DATE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="org != null" >
+        #{org,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="seqId != null" >
+        #{seqId,jdbcType=INTEGER},
+      </if>
+      <if test="distRegNo != null" >
+        #{distRegNo,jdbcType=VARCHAR},
+      </if>
+      <if test="distName != null" >
+        #{distName,jdbcType=VARCHAR},
+      </if>
+      <if test="distBelongOrg != null" >
+        #{distBelongOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="distCorpOrg != null" >
+        #{distCorpOrg,jdbcType=INTEGER},
+      </if>
+      <if test="distCorpId != null" >
+        #{distCorpId,jdbcType=INTEGER},
+      </if>
+      <if test="distCorpSeqId != null" >
+        #{distCorpSeqId,jdbcType=INTEGER},
+      </if>
+      <if test="farePlace != null" >
+        #{farePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="operManIdentNo != null" >
+        #{operManIdentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="operManName != null" >
+        #{operManName,jdbcType=VARCHAR},
+      </if>
+      <if test="fareScope != null" >
+        #{fareScope,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkDate != null" >
+        #{checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pojo.TCorpDistExample" resultType="java.lang.Integer" >
+    select count(*) from t_corp_dist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_corp_dist
+    <set >
+      <if test="record.uuid != null" >
+        UUID = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.org != null" >
+        ORG = #{record.org,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.seqId != null" >
+        SEQ_ID = #{record.seqId,jdbcType=INTEGER},
+      </if>
+      <if test="record.distRegNo != null" >
+        DIST_REG_NO = #{record.distRegNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.distName != null" >
+        DIST_NAME = #{record.distName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.distBelongOrg != null" >
+        DIST_BELONG_ORG = #{record.distBelongOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.distCorpOrg != null" >
+        DIST_CORP_ORG = #{record.distCorpOrg,jdbcType=INTEGER},
+      </if>
+      <if test="record.distCorpId != null" >
+        DIST_CORP_ID = #{record.distCorpId,jdbcType=INTEGER},
+      </if>
+      <if test="record.distCorpSeqId != null" >
+        DIST_CORP_SEQ_ID = #{record.distCorpSeqId,jdbcType=INTEGER},
+      </if>
+      <if test="record.farePlace != null" >
+        FARE_PLACE = #{record.farePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operManIdentNo != null" >
+        OPER_MAN_IDENT_NO = #{record.operManIdentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operManName != null" >
+        OPER_MAN_NAME = #{record.operManName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fareScope != null" >
+        FARE_SCOPE = #{record.fareScope,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startDate != null" >
+        START_DATE = #{record.startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkDate != null" >
+        CHECK_DATE = #{record.checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null" >
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_corp_dist
+    set UUID = #{record.uuid,jdbcType=VARCHAR},
+      ORG = #{record.org,jdbcType=INTEGER},
+      ID = #{record.id,jdbcType=INTEGER},
+      SEQ_ID = #{record.seqId,jdbcType=INTEGER},
+      DIST_REG_NO = #{record.distRegNo,jdbcType=VARCHAR},
+      DIST_NAME = #{record.distName,jdbcType=VARCHAR},
+      DIST_BELONG_ORG = #{record.distBelongOrg,jdbcType=VARCHAR},
+      DIST_CORP_ORG = #{record.distCorpOrg,jdbcType=INTEGER},
+      DIST_CORP_ID = #{record.distCorpId,jdbcType=INTEGER},
+      DIST_CORP_SEQ_ID = #{record.distCorpSeqId,jdbcType=INTEGER},
+      FARE_PLACE = #{record.farePlace,jdbcType=VARCHAR},
+      OPER_MAN_IDENT_NO = #{record.operManIdentNo,jdbcType=VARCHAR},
+      OPER_MAN_NAME = #{record.operManName,jdbcType=VARCHAR},
+      FARE_SCOPE = #{record.fareScope,jdbcType=VARCHAR},
+      START_DATE = #{record.startDate,jdbcType=TIMESTAMP},
+      CHECK_DATE = #{record.checkDate,jdbcType=TIMESTAMP},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.TCorpDist" >
+    update t_corp_dist
+    <set >
+      <if test="org != null" >
+        ORG = #{org,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        ID = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="seqId != null" >
+        SEQ_ID = #{seqId,jdbcType=INTEGER},
+      </if>
+      <if test="distRegNo != null" >
+        DIST_REG_NO = #{distRegNo,jdbcType=VARCHAR},
+      </if>
+      <if test="distName != null" >
+        DIST_NAME = #{distName,jdbcType=VARCHAR},
+      </if>
+      <if test="distBelongOrg != null" >
+        DIST_BELONG_ORG = #{distBelongOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="distCorpOrg != null" >
+        DIST_CORP_ORG = #{distCorpOrg,jdbcType=INTEGER},
+      </if>
+      <if test="distCorpId != null" >
+        DIST_CORP_ID = #{distCorpId,jdbcType=INTEGER},
+      </if>
+      <if test="distCorpSeqId != null" >
+        DIST_CORP_SEQ_ID = #{distCorpSeqId,jdbcType=INTEGER},
+      </if>
+      <if test="farePlace != null" >
+        FARE_PLACE = #{farePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="operManIdentNo != null" >
+        OPER_MAN_IDENT_NO = #{operManIdentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="operManName != null" >
+        OPER_MAN_NAME = #{operManName,jdbcType=VARCHAR},
+      </if>
+      <if test="fareScope != null" >
+        FARE_SCOPE = #{fareScope,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkDate != null" >
+        CHECK_DATE = #{checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.TCorpDist" >
+    update t_corp_dist
+    set ORG = #{org,jdbcType=INTEGER},
+      ID = #{id,jdbcType=INTEGER},
+      SEQ_ID = #{seqId,jdbcType=INTEGER},
+      DIST_REG_NO = #{distRegNo,jdbcType=VARCHAR},
+      DIST_NAME = #{distName,jdbcType=VARCHAR},
+      DIST_BELONG_ORG = #{distBelongOrg,jdbcType=VARCHAR},
+      DIST_CORP_ORG = #{distCorpOrg,jdbcType=INTEGER},
+      DIST_CORP_ID = #{distCorpId,jdbcType=INTEGER},
+      DIST_CORP_SEQ_ID = #{distCorpSeqId,jdbcType=INTEGER},
+      FARE_PLACE = #{farePlace,jdbcType=VARCHAR},
+      OPER_MAN_IDENT_NO = #{operManIdentNo,jdbcType=VARCHAR},
+      OPER_MAN_NAME = #{operManName,jdbcType=VARCHAR},
+      FARE_SCOPE = #{fareScope,jdbcType=VARCHAR},
+      START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      CHECK_DATE = #{checkDate,jdbcType=TIMESTAMP},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+  
+  <!--   通过高管的uuid查询公司信息 -->
+  <resultMap id="TCorp" type="com.pojo.TCorp" >
+    <id column="UUID" property="uuid" jdbcType="VARCHAR" />
+    <result column="ORG" property="org" jdbcType="INTEGER" />
+    <result column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SEQ_ID" property="seqId" jdbcType="INTEGER" />
+    <result column="REG_NO" property="regNo" jdbcType="VARCHAR" />
+    <result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+    <result column="ADDR" property="addr" jdbcType="VARCHAR" />
+    <result column="BELONG_ORG" property="belongOrg" jdbcType="VARCHAR" />
+    <result column="BELONG_DIST_ORG" property="belongDistOrg" jdbcType="VARCHAR" />
+    <result column="BELONG_TRADE" property="belongTrade" jdbcType="VARCHAR" />
+    <result column="ECON_KIND" property="econKind" jdbcType="VARCHAR" />
+    <result column="ADMIT_MAIN" property="admitMain" jdbcType="VARCHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="CHECK_DATE" property="checkDate" jdbcType="TIMESTAMP" />
+    <result column="OPER_MAN_IDENT_NO" property="operManIdentNo" jdbcType="VARCHAR" />
+    <result column="OPER_MAN_NAME" property="operManName" jdbcType="VARCHAR" />
+    <result column="CORP_STATUS" property="corpStatus" jdbcType="VARCHAR" />
+    <result column="REG_CAPI" property="regCapi" jdbcType="INTEGER" />
+    <result column="FARE_TERM_START" property="fareTermStart" jdbcType="TIMESTAMP" />
+    <result column="FARE_TERM_END" property="fareTermEnd" jdbcType="VARCHAR" />
+    <result column="FARE_SCOPE" property="fareScope" jdbcType="VARCHAR" />
+    <result column="UNI_SCID" property="uniScid" jdbcType="VARCHAR" />
+    <result column="TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="WEB_URL" property="webUrl" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="PRAC_PERSON_NUM" property="pracPersonNum" jdbcType="INTEGER" />
+    <result column="ORG_INST_CODE" property="orgInstCode" jdbcType="VARCHAR" />
+    <result column="TAXPAY_NUM" property="taxpayNum" jdbcType="VARCHAR" />
+    <result column="STAFF_SIZE" property="staffSize" jdbcType="VARCHAR" />
+    <result column="ENGLISH_NAME" property="englishName" jdbcType="VARCHAR" />
+    <result column="FORMER_NAME" property="formerName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_ORG" property="createOrg" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="findtcorp" resultMap="TCorp" parameterType="java.lang.String">
+  SELECT
+	a.*
+	FROM
+	t_corp a
+	JOIN t_m_corp_corp_dist b ON a.uuid = b.uuid
+	WHERE
+	b.sub_uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+</mapper>
